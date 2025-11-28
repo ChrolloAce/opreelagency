@@ -32,11 +32,9 @@ export function Navbar() {
       >
         {/* Logo Area */}
         <div className="flex items-center gap-2.5 cursor-pointer group">
-          {/* Logo Icon */}
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 transition-transform duration-300 group-hover:scale-105">
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
-              <path d="M5.25 21a.75.75 0 0 1-.75-.75V3.75a.75.75 0 0 1 1.197-.63l14.25 8.25a.75.75 0 0 1 0 1.26L5.697 20.87A.75.75 0 0 1 5.25 21Z" />
-            </svg>
+          {/* Logo Image */}
+          <div className="h-9 w-9 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+            <img src="/opreellogo.png" alt="OPREEL Logo" className="h-full w-full object-contain" />
           </div>
           
           {/* Brand Name */}

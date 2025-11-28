@@ -15,8 +15,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Creator Hunter - Creator Marketing On Auto-Pilot",
-  description: "Find and Outreach viral creators in your niche — get 100's of new collabs while you sleep.",
+  title: "OPREEL - Scale with UGC & Influencer campaigns",
+  description: "Volume negates luck. We provide and manage UGC creators to effectively scale your brand fast.",
+  icons: {
+    icon: "/opreellogo.png",
+  },
 };
 
 export default function RootLayout({
