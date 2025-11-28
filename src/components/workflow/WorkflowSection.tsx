@@ -39,34 +39,30 @@ export function WorkflowSection() {
 
         {/* Cards Row */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
-          {/* Card 1 - Creator Volume */}
+          {/* Card 1 - Creators */}
           <WorkflowCard
-            title="Our creators create high converting content"
+            title="High-Converting Content From Top Creators"
             subtitle="To push out volume instantly. We handle sourcing, briefing, and production to deliver high-volume assets ready to scale."
-            gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)" 
-          >
-            {/* Content Removed as requested */}
-          </WorkflowCard>
+            gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)"
+            image="/Title/2.png"
+          />
 
-          {/* Card 2 - Management */}
+          {/* Card 2 - Manage */}
           <WorkflowCard
-            title="We manage virality and report to you"
+            title={<>We Manage Virality<br/>& Report To You</>}
             subtitle="Daily and weekly insights. We track every metric and provide detailed performance reports so you can focus on strategy."
             gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)"
             className="relative overflow-hidden"
-          >
-            {/* Content Removed as requested */}
-             <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border-[20px] border-white/5 blur-3xl opacity-20" />
-          </WorkflowCard>
+            image="/Title/3.png"
+          />
 
           {/* Card 3 - Scale */}
           <WorkflowCard
-            title="We Optimize & Scale Winners"
+            title="We Scale Winners & Optimize Conversions"
             subtitle="Get millions of views that convert. We iterate on winning hooks and formats to drive massive reach and ROI."
             gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)"
-          >
-            {/* Content Removed as requested */}
-          </WorkflowCard>
+            image="/Title/1.png"
+          />
         </div>
 
         {/* Flow Connector to Next Section */}
