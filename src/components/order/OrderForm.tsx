@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { submitOrder } from "@/app/actions";
+import { createStripeSession } from "@/app/actions";
 
 export function OrderForm() {
   const searchParams = useSearchParams();
@@ -248,7 +248,7 @@ export function OrderForm() {
             } else {
               if (isValid) {
                 setIsSubmitting(true);
-                await submitOrder({ ...details, videoCount, planType, totalPrice });
+                await createStripeSession({ ...details, videoCount, planType });
               }
             }
           }}

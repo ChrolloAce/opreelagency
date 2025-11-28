@@ -110,6 +110,9 @@ export async function createStripeSession(orderData: any) {
       formatStyle: formatStyle.slice(0, 500),
     },
     mode: "payment",
+    invoice_creation: {
+      enabled: true,
+    },
     success_url: `http://localhost:3001/thank-you?session_id={CHECKOUT_SESSION_ID}`, // Replace localhost with your domain in prod
     cancel_url: `http://localhost:3001/order`,
   });
