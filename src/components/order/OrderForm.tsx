@@ -13,7 +13,7 @@ export function OrderForm() {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [videoCount, setVideoCount] = useState(initialVideos);
-  const [planType, setPlanType] = useState(initialPlan); // "done-for-you" or "just-videos"
+  const [planType, setPlanType] = useState(initialPlan); 
   
   const [details, setDetails] = useState({
     promotionDetails: "",
@@ -39,6 +39,17 @@ export function OrderForm() {
   const handleNext = () => setStep(prev => prev + 1);
   const handleBack = () => setStep(prev => prev - 1);
 
+  // Validation
+  const isStepValid = () => {
+    switch(step) {
+      case 1: return true; 
+      case 2: return details.promotionDetails && details.formatStyle;
+      case 3: return details.email && details.email.includes("@");
+      default: return false;
+    }
+  };
+  const isValid = isStepValid();
+
   return (
     <div className="w-full max-w-2xl bg-black/40 backdrop-blur-3xl backdrop-saturate-150 rounded-[32px] shadow-2xl border border-white/10 overflow-hidden flex flex-col min-h-[600px] transition-all duration-500">
       
@@ -49,13 +60,13 @@ export function OrderForm() {
              <img src="/opreellogo.png" alt="OPREEL" className="h-6 w-auto brightness-0 invert" />
              <span className="font-bold text-white tracking-tight">OPREEL</span>
           </div>
-          <span className="text-xs font-bold text-blue-200 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-500/30">
+          <span className="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full border border-white/20">
             Step {step} of 3
           </span>
         </div>
         <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-blue-500 transition-all duration-500 ease-out rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6)]"
+            className="h-full bg-white transition-all duration-500 ease-out rounded-full shadow-[0_0_15px_rgba(255,255,255,0.4)]"
             style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
@@ -76,17 +87,17 @@ export function OrderForm() {
             <div className="flex justify-center">
               <div className="bg-white/5 border border-white/10 p-1 rounded-full inline-flex relative w-full max-w-md">
                 <div 
-                  className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-blue-600 rounded-full shadow-lg transition-all duration-300 ease-out ${planType === "done-for-you" ? "left-1" : "left-[calc(50%)]"}`}
+                  className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-full shadow-lg transition-all duration-300 ease-out ${planType === "done-for-you" ? "left-1" : "left-[calc(50%)]"}`}
                 />
                 <button 
                   onClick={() => setPlanType("done-for-you")}
-                  className={`relative z-10 w-1/2 py-2 rounded-full text-sm font-bold transition-colors duration-300 ${planType === "done-for-you" ? "text-white" : "text-slate-400 hover:text-white"}`}
+                  className={`relative z-10 w-1/2 py-2 rounded-full text-sm font-bold transition-colors duration-300 ${planType === "done-for-you" ? "text-black" : "text-slate-400 hover:text-white"}`}
                 >
                   Done For You
                 </button>
                 <button 
                   onClick={() => setPlanType("just-videos")}
-                  className={`relative z-10 w-1/2 py-2 rounded-full text-sm font-bold transition-colors duration-300 ${planType === "just-videos" ? "text-white" : "text-slate-400 hover:text-white"}`}
+                  className={`relative z-10 w-1/2 py-2 rounded-full text-sm font-bold transition-colors duration-300 ${planType === "just-videos" ? "text-black" : "text-slate-400 hover:text-white"}`}
                 >
                   Just Videos
                 </button>
@@ -101,7 +112,7 @@ export function OrderForm() {
               </div>
               <div className="text-right">
                 <span className="text-slate-400 text-sm font-bold uppercase tracking-wider">Total</span>
-                <div className="text-4xl font-bold text-blue-400">${Math.round(totalPrice).toLocaleString()}</div>
+                <div className="text-4xl font-bold text-white">${Math.round(totalPrice).toLocaleString()}</div>
                 <div className="text-xs text-slate-500">${pricePerVideo.toFixed(2)} / video</div>
               </div>
             </div>
@@ -119,17 +130,17 @@ export function OrderForm() {
               />
               <div className="w-full h-4 bg-white/10 rounded-full overflow-hidden relative z-10">
                 <div 
-                  className="h-full bg-blue-600 transition-all duration-150 ease-out"
+                  className="h-full bg-white transition-all duration-150 ease-out"
                   style={{ width: `${((videoCount - 10) / (4000 - 10)) * 100}%` }}
                 />
               </div>
               <div 
-                className="absolute h-8 w-8 bg-white border-2 border-blue-500 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)] z-10 pointer-events-none transition-all duration-150 ease-out flex items-center justify-center"
+                className="absolute h-8 w-8 bg-white border-2 border-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.5)] z-10 pointer-events-none transition-all duration-150 ease-out flex items-center justify-center"
                 style={{ 
                   left: `calc(${((videoCount - 10) / (4000 - 10)) * 100}% - 16px)` 
                 }}
               >
-                <div className="h-2 w-2 bg-blue-600 rounded-full" />
+                <div className="h-2 w-2 bg-black rounded-full" />
               </div>
             </div>
           </div>
@@ -150,7 +161,7 @@ export function OrderForm() {
                 value={details.promotionDetails}
                 onChange={handleChange}
                 rows={3}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-blue-500 focus:bg-white/10 outline-none transition-all resize-none"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-white focus:bg-white/10 outline-none transition-all resize-none"
                 placeholder="Brand name, product details, key messages..."
               />
             </div>
@@ -166,7 +177,7 @@ export function OrderForm() {
                 value={details.formatStyle}
                 onChange={handleChange}
                 rows={6}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-blue-500 focus:bg-white/10 outline-none transition-all resize-none"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-white focus:bg-white/10 outline-none transition-all resize-none"
                 placeholder="Describe the exact format, emotion, and style you want..."
               />
             </div>
@@ -188,7 +199,7 @@ export function OrderForm() {
                 type="email"
                 value={details.email}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-blue-500 focus:bg-white/10 outline-none transition-all"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-white focus:bg-white/10 outline-none transition-all"
                 placeholder="your@email.com"
               />
               <p className="text-xs text-slate-500 mt-2">
@@ -207,7 +218,7 @@ export function OrderForm() {
               </div>
               <div className="border-t border-white/10 pt-4 flex justify-between items-end">
                 <span className="text-slate-200 font-bold">Total Due</span>
-                <span className="text-2xl font-bold text-blue-400">${Math.round(totalPrice).toLocaleString()}</span>
+                <span className="text-2xl font-bold text-white">${Math.round(totalPrice).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -233,14 +244,16 @@ export function OrderForm() {
         <button 
           onClick={async () => {
             if (step < 3) {
-              handleNext();
+              if (isValid) handleNext();
             } else {
-              setIsSubmitting(true);
-              await submitOrder({ ...details, videoCount, planType, totalPrice });
+              if (isValid) {
+                setIsSubmitting(true);
+                await submitOrder({ ...details, videoCount, planType, totalPrice });
+              }
             }
           }}
-          disabled={isSubmitting}
-          className="px-8 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-500 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-0.5 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting || !isValid}
+          className="px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:-translate-y-0.5 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
         >
           {isSubmitting ? "Processing..." : (step < 3 ? "Continue" : "Pay & Order")}
           {!isSubmitting && step < 3 && (

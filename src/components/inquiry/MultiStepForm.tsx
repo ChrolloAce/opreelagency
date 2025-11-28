@@ -33,9 +33,23 @@ export function MultiStepForm() {
   const totalFormSteps = 4;
   const progress = step === 0 ? 0 : ((step) / totalFormSteps) * 100;
 
+  // Validation Logic
+  const isStepValid = () => {
+    switch(step) {
+      case 0: return true; // Welcome
+      case 1: return formData.fullName && formData.email && formData.companyName && formData.website;
+      case 2: return formData.productDescription && formData.b2bOrB2c && formData.platform;
+      case 3: return formData.vcOrMrr && formData.budget && formData.runningCampaigns;
+      case 4: return formData.startDate && formData.source;
+      default: return false;
+    }
+  };
+
+  const isValid = isStepValid();
+
   return (
-    // Glass Container
-    <div className="w-full max-w-2xl bg-black/40 backdrop-blur-3xl backdrop-saturate-150 rounded-[32px] shadow-2xl border border-white/10 overflow-hidden flex flex-col min-h-[600px] transition-all duration-500">
+    // Glass Container: Dark Mode - Refined
+    <div className="w-full max-w-2xl bg-black/40 backdrop-blur-3xl backdrop-saturate-150 rounded-[32px] shadow-2xl border border-white/5 overflow-hidden flex flex-col min-h-[600px] transition-all duration-500">
       
       {/* Persistent Header */}
       <div className="px-8 pt-8 pb-4 border-b border-white/5 bg-white/5 backdrop-blur-xl">
@@ -50,16 +64,16 @@ export function MultiStepForm() {
           )}
 
           {step > 0 && (
-            <span className="text-xs font-bold text-blue-200 bg-blue-500/20 px-3 py-1 rounded-full backdrop-blur-sm border border-blue-500/30">
+            <span className="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/20">
               Step {step} of {totalFormSteps}
             </span>
           )}
         </div>
         
-        {/* Progress Bar - Blue */}
+        {/* Progress Bar - Monotone */}
         <div className={`h-1 w-full bg-white/10 rounded-full overflow-hidden transition-opacity duration-300 ${step === 0 ? "opacity-0" : "opacity-100"}`}>
           <div 
-            className="h-full bg-blue-500 transition-all duration-500 ease-out rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6)]"
+            className="h-full bg-white transition-all duration-500 ease-out rounded-full shadow-[0_0_15px_rgba(255,255,255,0.4)]"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -73,7 +87,7 @@ export function MultiStepForm() {
           {step === 0 && (
             <div className="flex flex-col items-center justify-center text-center h-full animate-in fade-in slide-in-from-bottom-4 duration-500">
                <div className="mb-8 relative">
-                 <div className="absolute -inset-10 bg-blue-500/20 blur-3xl rounded-full" />
+                 <div className="absolute -inset-10 bg-white/10 blur-3xl rounded-full" />
                  <img src="/opreellogo.png" alt="OPREEL" className="h-24 w-auto relative z-10 drop-shadow-2xl brightness-0 invert" />
                </div>
                
@@ -87,7 +101,7 @@ export function MultiStepForm() {
                <div className="mt-12 w-full max-w-xs">
                   <button 
                     onClick={handleNext}
-                    className="w-full py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:-translate-y-1 flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:-translate-y-1 flex items-center justify-center gap-2"
                   >
                     Start Inquiry
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5">
@@ -146,7 +160,7 @@ export function MultiStepForm() {
                   value={formData.productDescription}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-blue-500 focus:bg-white/10 focus:ring-1 focus:ring-blue-500 outline-none transition-all resize-none"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-white focus:bg-white/10 focus:ring-1 focus:ring-white outline-none transition-all resize-none"
                   placeholder="Tell us about what you're building..."
                   autoFocus
                 />
@@ -215,7 +229,7 @@ export function MultiStepForm() {
                     name="budget"
                     value={formData.budget}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none cursor-pointer hover:bg-white/10 transition-colors"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-white focus:ring-1 focus:ring-white appearance-none cursor-pointer hover:bg-white/10 transition-colors"
                   >
                     <option value="" disabled className="bg-slate-900 text-slate-400">Select a range</option>
                     <option value="<30k" className="bg-slate-900">Less than $30K</option>
@@ -258,17 +272,35 @@ export function MultiStepForm() {
                 value={formData.startDate} 
                 onChange={handleChange} 
               />
-              <Input 
-                label="Where did you find out about us?" 
-                name="source" 
-                value={formData.source} 
-                onChange={handleChange} 
-                placeholder="e.g. Twitter, LinkedIn, Referral..." 
-              />
               
-              <div className="bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 mt-8">
-                <h4 className="font-bold text-blue-200 mb-2">Ready to scale?</h4>
-                <p className="text-blue-100/80 text-sm leading-relaxed">
+              {/* Source Dropdown */}
+              <div className="space-y-2">
+                <Label>Where did you hear about us?</Label>
+                <div className="relative">
+                  <select 
+                    name="source"
+                    value={formData.source}
+                    onChange={handleChange}
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-white focus:ring-1 focus:ring-white appearance-none cursor-pointer hover:bg-white/10 transition-colors"
+                  >
+                    <option value="" disabled className="bg-slate-900 text-slate-400">Select source</option>
+                    <option value="X (Twitter)" className="bg-slate-900">X (Twitter)</option>
+                    <option value="YouTube" className="bg-slate-900">YouTube</option>
+                    <option value="Instagram" className="bg-slate-900">Instagram</option>
+                    <option value="TikTok" className="bg-slate-900">TikTok</option>
+                    <option value="LinkedIn" className="bg-slate-900">LinkedIn</option>
+                    <option value="Referral" className="bg-slate-900">Referral</option>
+                    <option value="Other" className="bg-slate-900">Other</option>
+                  </select>
+                  <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/50">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M6 9l6 6 6-6"/></svg>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mt-8">
+                <h4 className="font-bold text-white mb-2">Ready to scale?</h4>
+                <p className="text-slate-300 text-sm leading-relaxed">
                   Our team reviews every application personally. We'll get back to you within 24 hours with a strategy proposal.
                 </p>
               </div>
@@ -290,14 +322,16 @@ export function MultiStepForm() {
           <button 
             onClick={async () => {
               if (step < totalFormSteps) {
-                handleNext();
+                if (isValid) handleNext(); // Check validity
               } else {
-                setIsSubmitting(true);
-                await submitInquiry(formData);
+                if (isValid) {
+                  setIsSubmitting(true);
+                  await submitInquiry(formData);
+                }
               }
             }}
-            disabled={isSubmitting}
-            className="px-8 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-500 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-0.5 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isSubmitting || !isValid}
+            className={`px-8 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-500 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-0.5 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:bg-blue-600 disabled:hover:translate-y-0`}
           >
             {isSubmitting ? "Sending..." : (step < totalFormSteps ? "Next Step" : "Submit Application")}
             {!isSubmitting && step < totalFormSteps && (
@@ -312,14 +346,14 @@ export function MultiStepForm() {
   );
 }
 
-// --- Helper Components ---
+// --- Helper Components (Monotone) ---
 
 function Input({ label, ...props }: any) {
   return (
     <div>
       <label className="block text-sm font-semibold text-slate-300 mb-2">{label}</label>
       <input 
-        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-blue-500 focus:bg-white/10 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-white focus:bg-white/10 focus:ring-1 focus:ring-white outline-none transition-all"
         {...props}
       />
     </div>
@@ -337,7 +371,7 @@ function SelectButton({ selected, onClick, children }: { selected: boolean; onCl
       onClick={onClick}
       className={`w-full py-3 px-4 rounded-xl border font-bold transition-all ${
         selected 
-          ? "border-blue-500 bg-blue-500/20 text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.3)]" 
+          ? "border-white bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
           : "border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white hover:border-white/20"
       }`}
     >

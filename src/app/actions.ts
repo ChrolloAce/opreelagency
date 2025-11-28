@@ -1,6 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
+
+// Initialize Stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
+  apiVersion: "2024-12-18.acacia", // Use latest or your preferred version
+});
 
 interface EmailPayload {
   to: string;
@@ -13,6 +19,7 @@ export async function sendEmail(payload: EmailPayload) {
 
   if (!resendApiKey) {
     console.error("RESEND_API_KEY is not set");
+    // Don't fail hard if email key is missing, just log
     return { success: false, error: "Server configuration error" };
   }
 
@@ -24,78 +31,102 @@ export async function sendEmail(payload: EmailPayload) {
         Authorization: `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "OPREEL <onboarding@resend.dev>", // Default Resend sender or your verified domain
-        to: [payload.to], // Send to user
+        from: "OPREEL <onboarding@resend.dev>",
+        to: [payload.to],
         subject: payload.subject,
         html: payload.html,
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Resend API Error:", errorData);
       return { success: false, error: "Failed to send email" };
     }
 
     return { success: true };
   } catch (error) {
-    console.error("Email sending failed:", error);
     return { success: false, error: "Network error" };
   }
 }
 
 export async function submitInquiry(formData: any) {
-  // 1. Send Admin Notification (Optional - you can add this later)
-  // 2. Send User Confirmation
   await sendEmail({
     to: formData.email,
-    subject: "We received your strategy request - OPREEL",
+    subject: "Strategy Request Received - OPREEL",
     html: `
-      <div style="font-family: sans-serif; color: #333;">
-        <h1>Strategy Request Received</h1>
-        <p>Hi ${formData.fullName},</p>
-        <p>Thanks for contacting OPREEL. We've received your inquiry about scaling <strong>${formData.companyName}</strong>.</p>
-        <p><strong>Your Details:</strong></p>
-        <ul>
-          <li>Platform: ${formData.platform}</li>
-          <li>Budget: ${formData.budget}</li>
-          <li>Start Date: ${formData.startDate}</li>
-        </ul>
-        <p>Our team will review your application and get back to you within 24 hours with a custom strategy proposal.</p>
-        <br/>
-        <p>Best,</p>
-        <p>The OPREEL Team</p>
-      </div>
+      <h1>Strategy Request Received</h1>
+      <p>Name: ${formData.fullName}</p>
+      <p>Company: ${formData.companyName}</p>
+      <p>Platform: ${formData.platform}</p>
+      <p>Budget: ${formData.budget}</p>
     `
   });
-
   redirect("/thank-you");
 }
 
+// New: Stripe Checkout Action
+export async function createStripeSession(orderData: any) {
+  const { videoCount, planType, email, promotionDetails, formatStyle } = orderData;
+
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("Stripe key is missing");
+  }
+
+  // 1. Recalculate Price on Server (Security)
+  let pricePerVideo = 0;
+  if (planType === "just-videos") {
+     // Base $12, Floor $8
+     const discountFactor = (videoCount / 4000) * 4;
+     pricePerVideo = Math.max(8, Math.min(12, 12 - discountFactor));
+  } else {
+     // Base $25, Floor $18
+     const discountFactor = (videoCount / 4000) * 7;
+     pricePerVideo = Math.max(18, Math.min(25, 25 - discountFactor));
+  }
+  
+  const totalPrice = Math.round(videoCount * pricePerVideo); // Total in Dollars
+  const unitAmount = Math.round(totalPrice * 100); // Total in Cents
+
+  // 2. Create Checkout Session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    customer_email: email,
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: `${planType === "done-for-you" ? "Done For You" : "Just Videos"} Plan`,
+            description: `${videoCount} Videos | ${promotionDetails.slice(0, 50)}...`,
+          },
+          unit_amount: unitAmount, // Stripe expects total amount for quantity=1 here if we treat the "Plan" as 1 item
+        },
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      videoCount: videoCount.toString(),
+      planType: planType,
+      promotionDetails: promotionDetails.slice(0, 500),
+      formatStyle: formatStyle.slice(0, 500),
+    },
+    mode: "payment",
+    success_url: `http://localhost:3001/thank-you?session_id={CHECKOUT_SESSION_ID}`, // Replace localhost with your domain in prod
+    cancel_url: `http://localhost:3001/order`,
+  });
+
+  if (!session.url) {
+    throw new Error("Failed to create Stripe session");
+  }
+
+  redirect(session.url);
+}
+
+// Legacy simple order submit (replaced by Stripe)
 export async function submitOrder(orderData: any) {
   await sendEmail({
     to: orderData.email,
-    subject: "Order Confirmation - OPREEL",
-    html: `
-      <div style="font-family: sans-serif; color: #333;">
-        <h1>Order Confirmed</h1>
-        <p>Hi there,</p>
-        <p>Thank you for your order with OPREEL!</p>
-        <div style="background: #f4f4f5; padding: 20px; border-radius: 10px; margin: 20px 0;">
-          <h3 style="margin-top: 0;">Order Summary</h3>
-          <p><strong>Plan:</strong> ${orderData.planType.replace("-", " ")}</p>
-          <p><strong>Volume:</strong> ${orderData.videoCount} Videos</p>
-          <p><strong>Total:</strong> $${orderData.totalPrice}</p>
-        </div>
-        <p><strong>Next Steps:</strong></p>
-        <p>We will begin sourcing creators matching your style preferences immediately. You will receive an update when production begins.</p>
-        <br/>
-        <p>Best,</p>
-        <p>The OPREEL Team</p>
-      </div>
-    `
+    subject: "Order Confirmation",
+    html: `<p>Manual order received for ${orderData.videoCount} videos.</p>`
   });
-
   redirect("/thank-you");
 }
-
