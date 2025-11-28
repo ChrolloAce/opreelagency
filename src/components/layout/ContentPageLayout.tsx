@@ -5,7 +5,7 @@ import { Navbar } from "./Navbar";
 import { HeroBackground } from "../hero/HeroBackground";
 import { Footer } from "./Footer";
 
-export function LegalPageLayout({ title, lastUpdated, children }: { title: string; lastUpdated: string; children: ReactNode }) {
+export function ContentPageLayout({ title, lastUpdated, children }: { title: string; lastUpdated?: string; children: ReactNode }) {
   return (
     <main className="min-h-screen relative flex flex-col bg-white font-sans text-slate-900">
       <Navbar />

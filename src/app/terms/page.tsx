@@ -1,4 +1,4 @@
-import { LegalPageLayout } from "@/components/layout/LegalPageLayout";
+import { ContentPageLayout } from "@/components/layout/ContentPageLayout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalPageLayout title="Terms of Service" lastUpdated="November 28, 2025">
+    <ContentPageLayout title="Terms of Service" lastUpdated="November 28, 2025">
       <h3>1. Agreement to Terms</h3>
       <p>
         These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and OPREEL ("we," "us" or "our"), concerning your access to and use of the OPREEL website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the "Site").
@@ -38,7 +38,6 @@ export default function TermsPage() {
       <p>
         In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at support@opreels.com.
       </p>
-    </LegalPageLayout>
+    </ContentPageLayout>
   );
 }
-

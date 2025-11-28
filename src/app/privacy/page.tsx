@@ -1,4 +1,4 @@
-import { LegalPageLayout } from "@/components/layout/LegalPageLayout";
+import { ContentPageLayout } from "@/components/layout/ContentPageLayout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPageLayout title="Privacy Policy" lastUpdated="November 28, 2025">
+    <ContentPageLayout title="Privacy Policy" lastUpdated="November 28, 2025">
       <h3>1. Introduction</h3>
       <p>
         Welcome to OPREEL ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
@@ -48,7 +48,6 @@ export default function PrivacyPage() {
       <p>
         If you have questions or comments about this policy, you may email us at support@opreels.com.
       </p>
-    </LegalPageLayout>
+    </ContentPageLayout>
   );
 }
-
