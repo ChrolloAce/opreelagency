@@ -52,6 +52,7 @@ export function Footer() {
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-slate-900">Company</h3>
                 <ul role="list" className="mt-6 space-y-4">
+                  <FooterLink href="/creators" label="Join as Creator" />
                   <FooterLink href="mailto:support@opreels.com" label="Contact" />
                   <FooterLink href="/privacy" label="Privacy" />
                   <FooterLink href="/terms" label="Terms" />

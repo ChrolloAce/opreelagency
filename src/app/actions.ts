@@ -12,6 +12,10 @@ interface EmailPayload {
   to: string;
   subject: string;
   html: string;
+  attachments?: {
+    filename: string;
+    content: string; // Base64 string
+  }[];
 }
 
 export async function sendEmail(payload: EmailPayload) {
@@ -19,7 +23,6 @@ export async function sendEmail(payload: EmailPayload) {
 
   if (!resendApiKey) {
     console.error("RESEND_API_KEY is not set");
-    // Don't fail hard if email key is missing, just log
     return { success: false, error: "Server configuration error" };
   }
 
@@ -35,6 +38,7 @@ export async function sendEmail(payload: EmailPayload) {
         to: [payload.to],
         subject: payload.subject,
         html: payload.html,
+        attachments: payload.attachments,
       }),
     });
 
@@ -46,6 +50,68 @@ export async function sendEmail(payload: EmailPayload) {
   } catch (error) {
     return { success: false, error: "Network error" };
   }
+}
+
+export async function submitCreatorApplication(formData: FormData) {
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const age = formData.get("age") as string;
+  const gender = formData.get("gender") as string;
+  const country = formData.get("country") as string;
+  const instagram = formData.get("instagram") as string;
+  const tiktok = formData.get("tiktok") as string;
+  const twitter = formData.get("twitter") as string;
+  const experience = formData.get("experience") as string;
+  
+  const resumeFile = formData.get("resume") as File | null;
+  let attachments: { filename: string; content: string }[] = [];
+
+  if (resumeFile && resumeFile.size > 0) {
+    const buffer = Buffer.from(await resumeFile.arrayBuffer());
+    attachments.push({
+      filename: resumeFile.name,
+      content: buffer.toString("base64") // Convert to base64 for API
+    });
+  }
+
+  // 1. Send Notification to Admin
+  await sendEmail({
+    to: "ernesto@maktubtechnologies.com",
+    subject: `New Creator Application: ${name}`,
+    html: `
+      <h1>New Creator Application</h1>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Age:</strong> ${age}</p>
+      <p><strong>Gender:</strong> ${gender}</p>
+      <p><strong>Country:</strong> ${country}</p>
+      <hr />
+      <p><strong>Instagram:</strong> ${instagram || "N/A"}</p>
+      <p><strong>TikTok:</strong> ${tiktok || "N/A"}</p>
+      <p><strong>X (Twitter):</strong> ${twitter || "N/A"}</p>
+      <hr />
+      <p><strong>Experience:</strong></p>
+      <p>${experience}</p>
+    `,
+    attachments: attachments
+  });
+
+  // 2. Send Confirmation to Creator
+  await sendEmail({
+    to: email,
+    subject: "Application Received - OPREEL",
+    html: `
+      <h1>We received your application!</h1>
+      <p>Hi ${name},</p>
+      <p>Thanks for applying to join the OPREEL creator network. Our team will review your profile and portfolio.</p>
+      <p>If you're a good fit for our current campaigns, we'll be in touch shortly.</p>
+      <br />
+      <p>Best,</p>
+      <p>The OPREEL Team</p>
+    `
+  });
+
+  redirect("/thank-you");
 }
 
 export async function submitInquiry(formData: any) {
