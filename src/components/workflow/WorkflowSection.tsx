@@ -3,10 +3,11 @@
 import { theme } from "@/lib/theme";
 import { WorkflowCard } from "./WorkflowCard";
 import { StatsRow } from "./StatsRow";
+import { WorkflowConnector } from "./WorkflowConnector";
 
 export function WorkflowSection() {
   return (
-    <section className="relative z-20 bg-white pt-32 pb-32">
+    <section className="relative z-30 bg-white pt-32 pb-0">
       <div className="mx-auto max-w-[90rem] px-4">
         
         {/* Header Section - Side by Side Layout - ALIGNED CENTER */}
@@ -38,136 +39,38 @@ export function WorkflowSection() {
 
         {/* Cards Row */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
-          
-          {/* Card 1: Creators */}
+          {/* Card 1 - Creator Volume */}
           <WorkflowCard
-            title="We provide creators & UGC"
-            subtitle="To push out volume instantly"
-            gradient="linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)" 
+            title="Our creators create high converting content"
+            subtitle="To push out volume instantly. We handle sourcing, briefing, and production to deliver high-volume assets ready to scale."
+            gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)" 
           >
-            <div className="relative w-full px-6 -translate-y-2 transform">
-              <div className="rounded-2xl bg-slate-900 p-6 border border-white/10 shadow-xl w-full">
-                {/* Profile Stack */}
-                <div className="flex items-center justify-between mb-6">
-                   <div className="flex -space-x-3">
-                     {[1, 2, 3, 4].map((i) => (
-                       <img 
-                         key={i}
-                         src={`https://i.pravatar.cc/100?img=${i + 10}`} 
-                         alt="Creator"
-                         className="h-10 w-10 rounded-full border-2 border-slate-900 object-cover"
-                       />
-                     ))}
-                   </div>
-                   <div className="text-xs font-bold text-white bg-white/10 px-2 py-1 rounded-full">
-                     +50 more
-                   </div>
-                </div>
-                
-                {/* Volume Bar - Green */}
-                <div className="space-y-2">
-                  <div className="flex justify-between text-[11px] font-medium text-white/80">
-                    <span>Creator Volume</span>
-                  </div>
-                  <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full w-[92%] rounded-full bg-gradient-to-r from-green-400 to-emerald-500 animate-pulse shadow-[0_0_10px_rgba(74,222,128,0.4)]" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Content Removed as requested */}
           </WorkflowCard>
 
-          {/* Card 2: Manage */}
+          {/* Card 2 - Management */}
           <WorkflowCard
-            title="We manage & report"
-            subtitle="Daily and weekly insights"
-            gradient="linear-gradient(135deg, #172554 0%, #2563eb 100%)"
+            title="We manage virality and report to you"
+            subtitle="Daily and weekly insights. We track every metric and provide detailed performance reports so you can focus on strategy."
+            gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)"
             className="relative overflow-hidden"
           >
-             {/* Decoration */}
-             <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border-[20px] border-white/5 blur-3xl" />
-
-             <div className="relative w-full px-6 -translate-y-2 transform">
-              <div className="rounded-2xl bg-slate-900 p-6 border border-white/10 shadow-xl w-full">
-                <div className="space-y-4">
-                  {/* Status Item 1 */}
-                  <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/20 text-green-400">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3">
-                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                        <polyline points="17 6 23 6 23 12"/>
-                      </svg>
-                    </div>
-                    <p className="text-sm text-white/90 leading-tight">
-                      Your views are <span className="text-green-400 font-bold">56% up</span> last 7 days
-                    </p>
-                  </div>
-                  
-                  {/* Divider */}
-                  <div className="h-px w-full bg-white/10" />
-                  
-                  {/* Status Item 2 */}
-                  <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-500/20 text-blue-400">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3">
-                        <polygon points="23 7 16 12 23 17 23 7"/>
-                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                      </svg>
-                    </div>
-                    <p className="text-sm text-white/90 leading-tight">
-                      <span className="text-blue-400 font-bold">20 new videos</span> were uploaded last 7 days
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Content Removed as requested */}
+             <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border-[20px] border-white/5 blur-3xl opacity-20" />
           </WorkflowCard>
 
-          {/* Card 3: Optimize & Scale */}
+          {/* Card 3 - Scale */}
           <WorkflowCard
-            title="We optimize & scale"
-            subtitle="Get millions of views that convert"
-            gradient="linear-gradient(135deg, #020617 0%, #312e81 100%)"
+            title="We Optimize & Scale Winners"
+            subtitle="Get millions of views that convert. We iterate on winning hooks and formats to drive massive reach and ROI."
+            gradient="linear-gradient(135deg, #18181b 0%, #09090b 100%)"
           >
-            {/* UI: Viral Growth Graph */}
-            <div className="relative w-full px-6 -translate-y-2 transform">
-              <div className="rounded-2xl bg-slate-900 p-6 border border-white/10 shadow-xl overflow-hidden relative w-full">
-                <div className="relative z-10 flex justify-between items-start mb-8">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-white/50">Total Views</span>
-                    <div className="text-3xl font-bold text-white tracking-tight">2.4M+</div>
-                  </div>
-                  <div className="px-2 py-1 rounded bg-green-500/20 border border-green-500/30 text-[10px] font-bold text-green-400">
-                    +420%
-                  </div>
-                </div>
-
-                {/* Big Green Growth Graph */}
-                <div className="absolute bottom-0 left-0 right-0 h-24 w-full">
-                   <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="w-full h-full">
-                     <defs>
-                       <linearGradient id="greenGraph" x1="0" y1="0" x2="0" y2="1">
-                         <stop offset="0%" stopColor="#4ade80" stopOpacity="0.5" />
-                         <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                       </linearGradient>
-                     </defs>
-                     <path 
-                       d="M0 100 C 60 100, 100 80, 140 40 S 200 0, 200 0" 
-                       fill="none" 
-                       stroke="#4ade80" 
-                       strokeWidth="4"
-                     />
-                     <path 
-                       d="M0 100 C 60 100, 100 80, 140 40 S 200 0, 200 0 V 100 H 0 Z" 
-                       fill="url(#greenGraph)" 
-                     />
-                   </svg>
-                </div>
-              </div>
-            </div>
+            {/* Content Removed as requested */}
           </WorkflowCard>
-
         </div>
+
+        {/* Flow Connector to Next Section */}
+        <WorkflowConnector />
       </div>
     </section>
   );

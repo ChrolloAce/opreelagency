@@ -46,7 +46,7 @@ export function WorkflowCard({ title, subtitle, gradient, icon, children, classN
       {/* Bottom Text */}
       <div className="relative z-10 mt-auto">
         <h3 className="text-2xl font-bold text-white tracking-tight">{title}</h3>
-        <p className="text-sm font-medium opacity-90 mix-blend-plus-lighter mt-1" style={{ color: "rgba(255,255,255,0.85)" }}>{subtitle}</p>
+        <p className="text-sm leading-relaxed text-slate-300 mt-2 font-medium">{subtitle}</p>
       </div>
       
       {/* Inner Glow */}
