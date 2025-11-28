@@ -56,8 +56,6 @@ const cases = [
 export function CaseStudiesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
-  
-  // Refs for dynamic items
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -79,15 +77,11 @@ export function CaseStudiesSection() {
       let progress = travelled / totalDistance;
       progress = Math.max(0, Math.min(1, progress));
       
-      // 1. Animate Main Line Height
       lineRef.current.style.height = `${progress * 100}%`;
 
-      // 2. Animate Items based on individual thresholds
       itemsRef.current.forEach((item, index) => {
         if (!item) return;
         
-        // Calculate threshold for this specific item
-        // Distribute thresholds evenly along the timeline
         const itemThreshold = (index + 0.2) / (cases.length + 0.5);
         
         const conn = item.querySelector('.connector-line') as HTMLElement;
@@ -122,50 +116,29 @@ export function CaseStudiesSection() {
 
   return (
     <section ref={sectionRef} className="relative z-20 bg-white py-0 pb-32 overflow-hidden min-h-[1000px]">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 relative">
         
-        {/* Timeline Container */}
-        <div className="relative flex flex-col items-center">
+        {/* Central Spine */}
+        <div className="absolute top-0 bottom-0 left-1/2 w-[2px] -translate-x-1/2 bg-slate-100" />
+        <div 
+          ref={lineRef}
+          className="absolute top-0 left-1/2 w-[2px] -translate-x-1/2 bg-blue-500"
+          style={{ height: '0%' }} 
+        />
           
-          {/* Background Line */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-[2px] -translate-x-1/2 bg-slate-100" />
-          
-          {/* Fill Line */}
+        {cases.map((item, index) => (
           <div 
-            ref={lineRef}
-            className="absolute top-0 left-1/2 w-[2px] -translate-x-1/2 bg-blue-500"
-            style={{ height: '0%' }} 
-          />
-          
-          {cases.map((item, index) => (
-            <div 
-              key={item.id}
-              ref={(el) => { itemsRef.current[index] = el; }}
-              className={`relative w-full flex py-4 ${
-                item.align === 'left' ? 'justify-center md:justify-start' : 'justify-center md:justify-end'
-              } ${
-                // Apply negative top margin to all items starting from the 2nd one (index 1) 
-                // to create the zipper overlap effect - Adjusted to be less aggressive (-mt-32)
-                index > 0 ? 'md:-mt-32' : ''
-              }`}
-            >
-              <div className={`w-full md:w-[420px] relative ${item.align === 'left' ? 'md:pr-16' : 'md:pl-16'}`}>
-                
-                {/* Horizontal Connector */}
-                <div className={`connector-line hidden md:block absolute top-1/2 w-16 h-[2px] bg-blue-500 -mt-[1px] transition-transform duration-500 ease-out ${item.align === 'left' ? 'right-0 origin-right' : 'left-0 origin-left'}`} style={{ transform: 'scaleX(0)' }} />
-                
-                {/* Background Grey Line (Static) */}
-                <div className={`hidden md:block absolute top-1/2 w-16 h-[2px] bg-slate-100 -mt-[1px] -z-10 ${item.align === 'left' ? 'right-0' : 'left-0'}`} />
-
-                {/* Dot */}
-                <div 
-                   className={`connector-dot absolute top-1/2 w-4 h-4 rounded-full border-2 border-slate-200 bg-white z-10 -translate-y-1/2 transition-all duration-300 ${item.align === 'left' ? 'right-[-6px] md:right-[-68px]' : 'left-[-6px] md:left-[-68px]'}`}
-                >
-                   <div className="connector-dot-inner absolute inset-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300" />
-                </div>
-
-                {/* Card */}
-                <div className="group relative w-full aspect-square overflow-hidden rounded-[32px] bg-black shadow-2xl transition-transform hover:-translate-y-2 border border-white/10">
+            key={item.id}
+            ref={(el) => { itemsRef.current[index] = el; }}
+            className={`relative w-full grid grid-cols-1 md:grid-cols-2 py-4 ${
+              index > 0 ? 'md:-mt-32' : ''
+            }`}
+          >
+            {/* Left Alignment */}
+            {item.align === 'left' && (
+              <div className="col-start-1 flex items-center pr-8 md:pr-0 relative">
+                {/* Card at start (far left) */}
+                <div className="w-full md:w-[420px] flex-shrink-0 group relative aspect-square overflow-hidden rounded-[32px] bg-black shadow-2xl transition-transform hover:-translate-y-2 border border-white/10 z-10">
                   <video 
                     src={item.video} 
                     className="h-full w-full object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-500"
@@ -180,11 +153,59 @@ export function CaseStudiesSection() {
                     </p>
                   </div>
                 </div>
-             </div>
-            </div>
-          ))}
 
-        </div>
+                {/* Connecting Line - Fills space between card and spine */}
+                <div className="connector-line hidden md:block flex-grow h-[2px] bg-blue-500 mx-4 origin-right transition-transform duration-500 ease-out" style={{ transform: 'scaleX(0)' }} />
+                
+                {/* Static Grey Line */}
+                <div className="hidden md:block absolute right-0 top-1/2 w-[calc(100%-420px)] h-[2px] bg-slate-100 -mt-[1px] -z-10" />
+
+                {/* Dot on Spine (Right edge of this col) */}
+                <div 
+                   className="connector-dot absolute right-0 top-1/2 w-4 h-4 rounded-full border-2 border-slate-200 bg-white z-20 -translate-y-1/2 translate-x-1/2 transition-all duration-300"
+                >
+                   <div className="connector-dot-inner absolute inset-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300" />
+                </div>
+              </div>
+            )}
+
+            {/* Right Alignment */}
+            {item.align === 'right' && (
+              <div className="col-start-1 md:col-start-2 flex items-center pl-8 md:pl-0 relative justify-end md:justify-start">
+                 {/* Dot on Spine (Left edge of this col) */}
+                <div 
+                   className="connector-dot absolute left-0 top-1/2 w-4 h-4 rounded-full border-2 border-slate-200 bg-white z-20 -translate-y-1/2 -translate-x-1/2 transition-all duration-300"
+                >
+                   <div className="connector-dot-inner absolute inset-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300" />
+                </div>
+
+                {/* Connecting Line */}
+                <div className="connector-line hidden md:block flex-grow h-[2px] bg-blue-500 mx-4 origin-left transition-transform duration-500 ease-out" style={{ transform: 'scaleX(0)' }} />
+
+                {/* Static Grey Line */}
+                <div className="hidden md:block absolute left-0 top-1/2 w-[calc(100%-420px)] h-[2px] bg-slate-100 -mt-[1px] -z-10" />
+
+                {/* Card at end (far right) */}
+                <div className="w-full md:w-[420px] flex-shrink-0 group relative aspect-square overflow-hidden rounded-[32px] bg-black shadow-2xl transition-transform hover:-translate-y-2 border border-white/10 z-10">
+                   <video 
+                    src={item.video} 
+                    className="h-full w-full object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-500"
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent p-8 flex flex-col justify-end">
+                    <p className="text-xl md:text-2xl font-bold text-white leading-tight">
+                      <span className="text-blue-400">{item.stats}</span> {item.sub}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+        ))}
       </div>
     </section>
   );
