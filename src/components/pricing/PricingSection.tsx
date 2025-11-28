@@ -5,7 +5,7 @@ import { MiniVideoCarousel } from "./MiniVideoCarousel";
 
 export function PricingSection() {
   return (
-    <section className="relative z-30 bg-white pt-32 pb-64 overflow-hidden">
+    <section id="pricing" className="relative z-30 bg-white pt-32 pb-64 overflow-hidden">
       {/* Grid Pattern Background */}
       <div 
         className="absolute inset-0 pointer-events-none"

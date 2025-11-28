@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,7 +32,7 @@ export function Navbar() {
         }}
       >
         {/* Logo Area */}
-        <div className="flex items-center gap-2.5 cursor-pointer group">
+        <Link href="/" className="flex items-center gap-2.5 cursor-pointer group">
           {/* Logo Image */}
           <div className="h-9 w-9 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <img src="/opreellogo.png" alt="OPREEL Logo" className="h-full w-full object-contain" />
@@ -41,22 +42,22 @@ export function Navbar() {
           <span className="font-bold text-xl tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
             OPREEL
           </span>
-        </div>
+        </Link>
 
         {/* Links - Hidden on mobile */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-          <a href="#" className="hover:text-blue-600 transition-colors">Features</a>
-          <a href="#" className="hover:text-blue-600 transition-colors">Case Studies</a>
-          <a href="#" className="hover:text-blue-600 transition-colors">Pricing</a>
+          <a href="/#how-it-works" className="hover:text-blue-600 transition-colors">How it Works</a>
+          <a href="/#case-studies" className="hover:text-blue-600 transition-colors">Case Studies</a>
+          <a href="/#pricing" className="hover:text-blue-600 transition-colors">Pricing</a>
         </div>
 
         {/* Action Button */}
-        <button 
-          className="px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-medium transition-transform hover:scale-105 hover:bg-slate-800 active:scale-95"
-          style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+        <Link 
+          href="/get-started"
+          className="px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-medium transition-transform hover:scale-105 hover:bg-slate-800 active:scale-95 shadow-md hover:shadow-lg"
         >
           Get Started
-        </button>
+        </Link>
       </div>
     </nav>
   );

@@ -115,7 +115,7 @@ export function CaseStudiesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative z-20 bg-white py-0 pb-32 overflow-hidden min-h-[1000px]">
+    <section id="case-studies" ref={sectionRef} className="relative z-20 bg-white py-0 pb-32 overflow-hidden min-h-[1000px]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative">
         
         {/* Central Spine */}
@@ -155,7 +155,7 @@ export function CaseStudiesSection() {
                 </div>
 
                 {/* Connecting Line - Fills space between card and spine */}
-                <div className="connector-line hidden md:block flex-grow h-[2px] bg-blue-500 mx-4 origin-right transition-transform duration-500 ease-out" style={{ transform: 'scaleX(0)' }} />
+                <div className="connector-line hidden md:block flex-grow h-[2px] bg-blue-500 ml-4 origin-right transition-transform duration-500 ease-out" style={{ transform: 'scaleX(0)' }} />
                 
                 {/* Static Grey Line */}
                 <div className="hidden md:block absolute right-0 top-1/2 w-[calc(100%-420px)] h-[2px] bg-slate-100 -mt-[1px] -z-10" />
@@ -180,7 +180,7 @@ export function CaseStudiesSection() {
                 </div>
 
                 {/* Connecting Line */}
-                <div className="connector-line hidden md:block flex-grow h-[2px] bg-blue-500 mx-4 origin-left transition-transform duration-500 ease-out" style={{ transform: 'scaleX(0)' }} />
+                <div className="connector-line hidden md:block flex-grow h-[2px] bg-blue-500 mr-4 origin-left transition-transform duration-500 ease-out" style={{ transform: 'scaleX(0)' }} />
 
                 {/* Static Grey Line */}
                 <div className="hidden md:block absolute left-0 top-1/2 w-[calc(100%-420px)] h-[2px] bg-slate-100 -mt-[1px] -z-10" />

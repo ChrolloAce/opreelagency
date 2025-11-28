@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export function PricingCalculator() {
   const [videoCount, setVideoCount] = useState(20);
@@ -130,10 +131,13 @@ export function PricingCalculator() {
 
         {/* Footer Actions */}
         <div className="mt-auto">
-          <button className="group w-full py-4 rounded-full bg-slate-900 text-white font-bold text-lg hover:bg-slate-800 transition-all transform active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 mb-4">
+          <Link 
+            href={{ pathname: '/order', query: { videos: videoCount, plan: planType } }}
+            className="group w-full py-4 rounded-full bg-slate-900 text-white font-bold text-lg hover:bg-slate-800 transition-all transform active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 mb-4"
+          >
             Get started with {videoCount} videos
             <ArrowRightIcon />
-          </button>
+          </Link>
 
           <div className="text-center text-sm text-slate-400">
             Need more than 4,000 videos? <a href="#" className="text-blue-600 font-medium hover:underline">Contact Enterprise</a>

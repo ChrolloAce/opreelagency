@@ -7,7 +7,7 @@ import { WorkflowConnector } from "./WorkflowConnector";
 
 export function WorkflowSection() {
   return (
-    <section className="relative z-30 bg-white pt-32 pb-0">
+    <section id="how-it-works" className="relative z-30 bg-white pt-32 pb-0">
       <div className="mx-auto max-w-[90rem] px-4">
         
         {/* Header Section - Side by Side Layout - ALIGNED CENTER */}

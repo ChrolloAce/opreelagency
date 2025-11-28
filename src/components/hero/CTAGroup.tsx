@@ -1,12 +1,14 @@
 "use client";
 
 import { theme } from "@/lib/theme";
+import Link from "next/link";
 
 export function CTAGroup() {
   return (
     <div className="mt-8 flex flex-col items-center gap-5">
       {/* Primary CTA Button with Sword Sheath/Shimmer Effect */}
-      <button
+      <Link
+        href="/get-started"
         className="group relative inline-flex cursor-pointer items-center gap-2 overflow-hidden rounded-full px-9 py-4 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
         style={{
           backgroundColor: theme.colors.brand.primary,
@@ -20,7 +22,7 @@ export function CTAGroup() {
           Start scaling now
           <ArrowRightIcon />
         </span>
-      </button>
+      </Link>
     </div>
   );
 }
