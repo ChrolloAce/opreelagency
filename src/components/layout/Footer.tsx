@@ -31,31 +31,30 @@ export function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-slate-900">Product</h3>
+                <h3 className="text-sm font-semibold leading-6 text-slate-900">Services</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  <FooterLink href="/#how-it-works" label="Features" />
+                  <FooterLink href="/services/managed-ugc-campaigns" label="Managed UGC" />
+                  <FooterLink href="/services/buy-video-creative-packs" label="Video Creative Packs" />
                   <FooterLink href="/#pricing" label="Pricing" />
                   <FooterLink href="/#case-studies" label="Case Studies" />
-                  <FooterLink href="#" label="Reviews" />
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-slate-900">Company</h3>
+                <h3 className="text-sm font-semibold leading-6 text-slate-900">Solutions</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  <FooterLink href="#" label="About" />
-                  <FooterLink href="#" label="Careers" />
-                  <FooterLink href="mailto:support@opreels.com" label="Contact" />
-                  <FooterLink href="#" label="Blog" />
+                  <FooterLink href="/solutions/ugc-for-mobile-apps" label="For Mobile Apps" />
+                  <FooterLink href="/solutions/ugc-for-dtc-brands" label="For DTC Brands" />
+                  <FooterLink href="/solutions/ugc-for-dtc-brands" label="For Agencies" />
                 </ul>
               </div>
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-slate-900">Legal</h3>
+                <h3 className="text-sm font-semibold leading-6 text-slate-900">Company</h3>
                 <ul role="list" className="mt-6 space-y-4">
+                  <FooterLink href="mailto:support@opreels.com" label="Contact" />
                   <FooterLink href="/privacy" label="Privacy" />
                   <FooterLink href="/terms" label="Terms" />
-                  <FooterLink href="/privacy" label="Cookie Policy" />
                 </ul>
               </div>
             </div>
