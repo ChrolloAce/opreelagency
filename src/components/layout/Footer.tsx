@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="bg-white border-t border-slate-100 pt-20 pb-12">
@@ -7,14 +9,14 @@ export function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           {/* Brand Column */}
           <div className="space-y-8">
-            <div className="flex items-center gap-2.5">
+            <Link href="/" className="flex items-center gap-2.5">
               <div className="h-8 w-8 flex items-center justify-center">
                 <img src="/opreellogo.png" alt="OPREEL" className="h-full w-full object-contain" />
               </div>
               <span className="font-bold text-xl tracking-tight text-slate-900">
                 OPREEL
               </span>
-            </div>
+            </Link>
             <p className="text-sm leading-6 text-slate-500 max-w-xs">
               Volume negates luck. We provide and manage UGC creators to effectively scale your brand fast.
             </p>
@@ -31,9 +33,9 @@ export function Footer() {
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-slate-900">Product</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  <FooterLink href="#" label="Features" />
-                  <FooterLink href="#" label="Pricing" />
-                  <FooterLink href="#" label="Case Studies" />
+                  <FooterLink href="/#how-it-works" label="Features" />
+                  <FooterLink href="/#pricing" label="Pricing" />
+                  <FooterLink href="/#case-studies" label="Case Studies" />
                   <FooterLink href="#" label="Reviews" />
                 </ul>
               </div>
@@ -42,7 +44,7 @@ export function Footer() {
                 <ul role="list" className="mt-6 space-y-4">
                   <FooterLink href="#" label="About" />
                   <FooterLink href="#" label="Careers" />
-                  <FooterLink href="#" label="Contact" />
+                  <FooterLink href="mailto:support@opreels.com" label="Contact" />
                   <FooterLink href="#" label="Blog" />
                 </ul>
               </div>
@@ -51,9 +53,9 @@ export function Footer() {
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-slate-900">Legal</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  <FooterLink href="#" label="Privacy" />
-                  <FooterLink href="#" label="Terms" />
-                  <FooterLink href="#" label="Cookie Policy" />
+                  <FooterLink href="/privacy" label="Privacy" />
+                  <FooterLink href="/terms" label="Terms" />
+                  <FooterLink href="/privacy" label="Cookie Policy" />
                 </ul>
               </div>
             </div>
@@ -74,9 +76,9 @@ export function Footer() {
 function FooterLink({ href, label }: { href: string; label: string }) {
   return (
     <li>
-      <a href={href} className="text-sm leading-6 text-slate-600 hover:text-blue-600 transition-colors">
+      <Link href={href} className="text-sm leading-6 text-slate-600 hover:text-blue-600 transition-colors">
         {label}
-      </a>
+      </Link>
     </li>
   );
 }
