@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Theme colors - UPDATED TO BLUE */
+  --bg-base: #ffffff;
+  --bg-sky-top: #f0f7ff;
+  --bg-sky-mid: #e0efff;
+  --bg-sky-bottom: #ffffff;
+  
+  --brand-primary: #2563eb; /* Blue 600 */
+  --brand-primary-soft: #dbeafe; /* Blue 100 */
+  --brand-accent: #3b82f6; /* Blue 500 */
+  
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
+  --text-subtle: #94a3b8; /* Slate 400 */
+  --text-highlight: #2563eb;
+  
+  --surface-card: #ffffff;
+  --surface-card-soft: rgba(255, 255, 255, 0.95);
+  --surface-dark: #0f172a;
+  
+  --border-soft: rgba(0, 0, 0, 0.06);
+  
+  /* Font families */
+  --font-display: "Playfair Display", "DM Serif Display", system-ui, -apple-system;
+  --font-body: "Inter", system-ui, -apple-system;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbar for carousel */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Floating animation for petals/icons */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--tw-rotate));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--tw-rotate));
+  }
+}
+
+/* Subtle pulse for CTA button */
+@keyframes subtle-pulse {
+  0%, 100% {
+    box-shadow: 0 18px 45px rgba(37, 99, 235, 0.2);
+  }
+  50% {
+    box-shadow: 0 22px 55px rgba(37, 99, 235, 0.3);
+  }
+}
+
+/* Selection styling */
+::selection {
+  background: var(--brand-primary-soft);
+  color: var(--brand-primary);
 }
