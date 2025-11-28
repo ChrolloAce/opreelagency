@@ -2,6 +2,7 @@
 
 import { OrderForm } from "@/components/order/OrderForm";
 import Link from "next/link";
+import { Suspense } from "react";
 
 // Use videos 1-10 for the grid
 const videos = Array.from({ length: 10 }).map((_, i) => `/videos/video${i + 1}.mp4`);
@@ -39,9 +40,14 @@ export default function OrderPage() {
 
       {/* Form Container */}
       <div className="relative z-10 w-full flex justify-center">
-        <OrderForm />
+        <Suspense fallback={
+          <div className="w-full max-w-2xl h-[600px] bg-black/40 backdrop-blur-3xl rounded-[32px] border border-white/10 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        }>
+          <OrderForm />
+        </Suspense>
       </div>
     </main>
   );
 }
-
