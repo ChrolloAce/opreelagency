@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Volume negates luck. We provide and manage UGC creators to effectively scale your brand fast.",
   icons: {
     icon: "/opreellogo.png",
+    shortcut: "/opreellogo.png",
+    apple: "/opreellogo.png",
   },
 };
 
