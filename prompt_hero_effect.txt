@@ -1,0 +1,57 @@
+# Recreate the "OPREEL" Concave 3D Video Carousel Hero Effect
+
+You are an expert React developer specializing in 3D UI interactions using Tailwind CSS and raw math-based animations (no heavy 3D libraries like Three.js). 
+
+Your task is to recreate a **Concave (Inverted) 3D Video Carousel** that infinitely scrolls horizontally. This effect creates a "panoramic" feeling where the cards curve *towards* the viewer at the edges, rather than away (like a typical convex carousel), or away depending on the Z-math.
+
+## Technical Requirements
+
+### 1. Framework & Stack
+- **Next.js / React** (Client Component)
+- **Tailwind CSS** for styling
+- **requestAnimationFrame** for the smooth, infinite scrolling loop (avoid Framer Motion for the core loop to ensure raw performance).
+
+### 2. Core Logic: The Cylinder Math
+The carousel places video cards on a virtual cylinder. 
+- **Radius**: Approx `800px`.
+- **Angle Per Card**: Approx `15 degrees`.
+- **Math**:
+  - `angleDeg = relativeIndex * ANGLE_PER_CARD`
+  - `angleRad = toRadians(angleDeg)`
+  - `translateX = RADIUS * Math.sin(angleRad)`
+  - `translateZ = RADIUS * (1 - Math.cos(angleRad)) - 100` (Adjusted to push center back or forward)
+  - `rotateY = -angleDeg` (Counter-rotation to face the center point)
+
+### 3. Infinite Scroll Logic
+- Use a `useState` or `useRef` to track a global `offset` value.
+- Use `requestAnimationFrame` to increment this offset continuously (e.g., `0.0004` speed per ms).
+- Calculate `renderIndices` dynamically: `[centerIndex - VISIBLE_COUNT ... centerIndex + VISIBLE_COUNT]`.
+- Modulo logic for data fetching: `dataIndex = ((index % total) + total) % total`.
+
+### 4. Component Structure
+
+**`VideoCarousel3D.tsx`**
+- **Container**: `w-screen`, centered with `left-1/2 -ml-[50vw]`, `overflow-visible`.
+- **Stage**: `perspective: 1200px`, `transformStyle: preserve-3d`.
+- **Items**: Absolute positioning using the calculated `transform` (TranslateX, TranslateZ, RotateY).
+- **Opacity**: Fade out cards as they get further from the center (`opacity = 1 - (distance / threshold)^4`).
+
+**`VideoCard.tsx`**
+- **Size**: Fixed width (e.g., `200px`), Height (`340px`).
+- **Content**: 
+  - `<video autoplay loop muted>` background.
+  - Gradient overlays for text readability.
+  - "Eye Icon" + View Count badge at the bottom center.
+  - Rounded corners (`rounded-2xl`), Shadow (`shadow-2xl`).
+
+### 5. Data Source
+- Array of objects with: `{ id, gradient (optional), views (e.g. "1.2M") }`.
+- Video sources: `/videos/video{id}.mp4`.
+
+## Deliverable
+Provide the full code for:
+1. `VideoCarousel3D.tsx` (The logic and layout)
+2. `VideoCard.tsx` (The item design)
+
+Ensure the animation is buttery smooth (60fps) and the math correctly creates that "curved wall of videos" effect.
+
